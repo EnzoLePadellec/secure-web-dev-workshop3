@@ -2,9 +2,9 @@ Documentation. Comment se lance le code, comment se lancent les tests, infos gé
 
 -> Comment se lance le code ?
 
-Pour lancer le code, il faut faire tourner le programme sur sa machine avant d'utiliser Insomnia. Sur Insomnia, il faudra tout d'abord se connecter à un utilisateur sans quoi toutes vos requêtes se verront refuser.
+Pour lancer le code, il faut faire tourner le programme sur sa machine avant d'utiliser Insomnia. Sur Insomnia, il faudra tout d'abord se connecter à un utilisateur en utilisant le json body sans quoi toutes vos requêtes se verront refuser.
 Vous pouvez donc vous register (mais vous aurez accès uniquement au rôle "user") ou vous login à un utilisateur déjà existant.
-Une fois votre token obtenu mettez-le dans "Bearer token", vous pouvez maintenant accéder à tous les liens auquel votre rôle vous permet d'accéder.
+Une fois votre token obtenu mettez-le dans "Bearer token", vous pouvez maintenant accéder à tous les liens et effectuer toutes les requêtes que votre rôle vous permet.
 
 -> Comment se lancent les tests ?
 
