@@ -34,12 +34,9 @@ router.get('/locations/:id', passport.authenticate('jwt',{session:false}), async
 router.post('/locations', passport.authenticate('jwt',{session:false}), roleMiddleware(['admin']), async(req,res) => {
     try{
         const location = {
-            ...req.body,
-            startDate: new Date(req.body?.startDate),
-            endDate: new Date(req.body?.endDate)
+            ...req.body
         }
         const newLocation = await locationsService.addLocation(location)
-        //res.status(200).send("La location a été créée avec succès.\n")
         return res.status(200).json(newLocation)
     }
     catch(error)
@@ -51,12 +48,9 @@ router.post('/locations', passport.authenticate('jwt',{session:false}), roleMidd
 router.put('/locations/:id', passport.authenticate('jwt',{session:false}), roleMiddleware(['admin']), async(req,res) => {
     try{
         const modifiedLocation = {
-            ...req.body,
-            startDate: new Date(req.body?.startDate),
-            endDate: new Date(req.body?.endDate)
+            ...req.body
         }
         const location = await locationsService.modifyLocation(req.params.id,modifiedLocation)
-        //return res.status(200).send("La location a été modifiée avec succès.\n")
         return res.status(200).json(location)
     }
     catch(error)

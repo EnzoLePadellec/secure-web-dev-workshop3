@@ -1,50 +1,22 @@
-# Workshop 3 - Create an API (ExpressJS)
+Documentation. Comment se lance le code, comment se lancent les tests, infos générales sur ce que le code fait. Infos sur les données attendues dans le fichier `.env`. Si vous mettez des features particulières, documentez-les. Mettez ça dans le README.md (vous pouvez override celui qui existe déjà)
 
-## 🌟 Goal
+-> Comment se lance le code ?
 
-> Build a REST API with ExpressJS
+Pour lancer, le code il faut faire tourner le programme sur sa machine avant d'utiliser Insomnia. Sur Insomnia il faudra tout d'abord se connecter à un utilisateur sans quoi toutes vos requêtes se verront refuser.
+Vous pouvez donc vous register (mais vous n'aurez accès uniquement au rôle "user") ou vous login à un utilisateur déjà existant.
+Une fois votre token obtenu mettez le dans "Bearer token", vous pouvez maintenant accéder à tous les liens auquel votre rôle vous permet d'accéder.
 
-## 👷 Prerequisites
+-> Comment se lancent les tests ?
 
-1. Fork this repository then clone it on your computer
-2. install Insomnia (or your API Testing tool of choice)
-3. Paste your .env file from workshop2 containing credentials to your Mongo Database
+Sur VSCode les test se lancent en entrant la commande suivante dans un terminal : "npm test -- locations.service.test.js".
 
-## 🗒 What to do
+-> Comment le code est fait ?
 
-> ⚠ Commit your changes after **each** instruction, following the commit message format:
-> ```text
-> feat(1): Initiate NPM Project
-> ```
+Le dossier 'auth' contient tous les stratégies. La statégie locale est dans le fichier local.strategy.js et la stratégie jwt dans jwt.strategy.js.
+Le dossier locations contient tous les fichiers liés aux locations (controller, model, service et test).
+Le dossier users contient tous les fichiers liés aux users (controller, model, service).
 
-1. Install existing packages with `npm install`
-   > ```shell
-   >  npm install
-   > ```
-2. Add NPM packages `express`
-   > Mongoose is a package making mongo request easier and more secure
-   > ```shell
-   > npm install --save express
-   > ```
-3. Put your database credentials in a file named `.env` (from Workshop2)
-4. Take a look at the architecture 
-   > One Folder per entity.
-   > In each folder, 3 files:
-   > 
-   > entity.controller.js -> Presentation Layer, API
-   > 
-   > entity.service.js -> Business Logic Layer
-   > 
-   > entity.model.js -> Database Layer
-5. Implement a "Hello World" route, on GET / that returns "Hello World"
-   1. Visit the route at http://localhost:3000/
-6. Create the API CRUD for Location
-   1. Create routes at Presentation Layer
-   2. Implement business logic in the Location Service
-   > ```
-   > For reference, CRUD:
-   > Create: /locations
-   > Update: /locations/:id
-   > Request (Get All: /locations , Get One: /locations/:id)
-   > Delete: /locations/:id
-   > ```
+-> Contenu du fichier '.env' ?
+
+MONGO_URI=mongodb+srv://EnzoLP:cecinestpasmonmdp@cluster0.h2ysiqm.mongodb.net/?retryWrites=true&w=majority
+JWT_SECRET = my-32-character-ultra-secure-and-ultra-long-secret

@@ -23,14 +23,13 @@ async function checkPassword(username,password)
 }
 
 function generateToken(user){
-	console.log(user.username)
     return jwt.sign({ _id: user.id, username : user.username },process.env.JWT_SECRET);
 }
 
 
 async function findOneByID(id)
 {
-  return User.findOne({_id: id}).select("-password")
+  return await User.findOne({_id: id}).select("-password")
 }
 
 async function findAll(){
@@ -50,8 +49,16 @@ async function deleteByID(id){
 
 async function modifyUser(id,body){
 	try {
-		const hash = await bcrypt.hash(body.password,10);
-		const username = body.username
+		const user = await findOneByID(id)
+		let hash = user.password
+		if(body?.password!=null)
+		{
+			hash = await bcrypt.hash(body.password,10);
+		}
+		let username = user.username
+		if(body?.username!=null){
+			username = body.username
+		}
 		await User.updateOne({_id:id},{username,password: hash})
 		return await findOneByID(id)
 

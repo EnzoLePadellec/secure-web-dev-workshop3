@@ -18,18 +18,6 @@ router.post('/users/register', async(req,res) => {
     }
 })
 
-
-router.post('/username', passport.authenticate('local',{session:false}),  async(req,res) => {
-    try{
-        const user = await usersService.findOneByUsername(req.body?.username);
-        return res.status(200).json(user)
-    }
-    catch(error)
-    {
-        return res.status(400).json({message: error.message})
-    }   
-})
-
 router.post('/users/login', passport.authenticate('local',{session:false}),  async(req,res) => {
     try{
         const user = await usersService.findOneByUsername(req.body?.username);

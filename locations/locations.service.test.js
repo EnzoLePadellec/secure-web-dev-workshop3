@@ -2,6 +2,10 @@ const locationsService = require('./locations.service')
 const Location = require('./locations.model')
 jest.mock('./locations.model')
 
+beforeEach(() => {
+    jest.resetAllMocks()
+})
+
 describe('Locations getLocations', () => {
     it('Should call model find', async () => {
         Location.find.mockResolvedValue([1,2,3,4])
@@ -9,7 +13,6 @@ describe('Locations getLocations', () => {
         expect(Location.find).toHaveBeenCalledTimes(1)
     })
 })
-
 
 describe('Locations FindOne',()=>{
     it('Should get a location', async()=>{
@@ -23,41 +26,40 @@ describe('Locations FindOne',()=>{
     })
 })
 
-/*describe('Locations Add',()=>{
-    it('Should get a location', async()=>{
-        const mockLocation ={
-            _id: '789411ec17dfkdimpok1409', filmName:'Tintin en Biélorusie'
-        }
-        Location.findOne.mockResolvedValue(mockLocation)
+describe('Locations AddLocation', () =>{
 
-        expect(await locationsService.findOneByID('789411ec17dfkdimpok1409')).toEqual(mockLocation)
-        expect(Location.findOne).toHaveBeenCalledTimes(1)
-    })
-})
-
-describe('Locations Delete',()=>{
-    it('Should get a location', async()=>{
-        const mockLocation ={
-            _id: '789411ec17dfkdimpok1409', filmName:'Tintin en Biélorusie'
-        }
-        Location.findOne.mockResolvedValue(mockLocation)
-
-        expect(await locationsService.deleteByID('789411ec17dfkdimpok1409')).toEqual("La location ayant pour id " + req.params.id + " a été supprimée avec succès.")
-        expect(Location.findOne).toHaveBeenCalledTimes(1)
-    })
+    it('Should add a new location to the database', async () => {
+        const newLocation = { filmName: 'Tintin au Qatar'};
+        const save = jest.fn().mockResolvedValue();
+        Location.mockImplementation(() => ({
+            save
+        }));
+    
+        await locationsService.addLocation(newLocation);
+        expect(Location).toHaveBeenCalledWith(newLocation);
+    });
 })
 
 describe('Locations Modify',()=>{
-    it('Should get a location', async()=>{
+    it('Should modify a location', async()=>{
         let mockLocation ={
             _id: '789411ec17dfkdimpok1409', filmName:'Tintin en Biélorusie'
         }
-        const newLocation ={
-            _id: '789411ec17dfkdimpok1409', filmName:'Tintin en Chine'
+        const modifiedLocation ={
+            filmName:'Tintin en Chine'
         }
         Location.updateOne.mockResolvedValue(mockLocation)
-
-        expect(await locationsService.modifyLocation('789411ec17dfkdimpok1409',newLocation)).toEqual(mockLocation)
+        await locationsService.modifyLocation(mockLocation.id,modifiedLocation)
         expect(Location.updateOne).toHaveBeenCalledTimes(1)
     })
-})*/
+
+})
+
+describe('Locations Delete', () => {
+    it('Should delete a Location', async () => {
+        const mockLocation = {_id: 'okpj51654efnk', filmName: 'Tintin en Zambie', remove: jest.fn().mockReturnValue(true)}
+        const id = mockLocation._id
+        Location.findOne.mockResolvedValue(mockLocation)
+        expect(await locationsService.deleteByID(mockLocation._id)).toEqual("La location ayant pour id " + id + " a été supprimée avec succès.")
+    })
+})
